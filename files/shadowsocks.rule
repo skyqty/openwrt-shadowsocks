@@ -79,6 +79,16 @@ fw_rule() {
 		loger 3 "Can't redirect, please check the iptables."
 		exit 1
 	}
+	$ipt -A SS_SPEC_WAN_FW -p udp \
+		-j REDIRECT --to-ports 5300 2>/dev/null || {
+		LOCAL_IP=$(uci get network.lan.ipaddr 2>/dev/null)
+		[ -n "$LOCAL_IP" ] && \
+		$ipt -A SS_SPEC_WAN_FW -p udp \
+			-j DNAT --to-destination $LOCAL_IP:5300
+	} || {
+		loger 3 "Can't redirect, please check the iptables."
+		exit 1
+	}
 	command -v ipset >/dev/null
 	return $?
 }
@@ -111,9 +121,13 @@ ac_rule() {
 EOF
 	$ipt -A zone_lan_prerouting -p tcp $EXT_ARGS \
 		-m comment --comment "_SS_SPEC_RULE_" -j SS_SPEC_LAN_AC
+	$ipt -A zone_lan_prerouting -p udp $EXT_ARGS \
+		-m comment --comment "_SS_SPEC_RULE_" -j SS_SPEC_LAN_AC
 
 	if [ "$OUTPUT" = 1 ]; then
 		$ipt -A OUTPUT -p tcp $EXT_ARGS \
+			-m comment --comment "_SS_SPEC_RULE_" -j SS_SPEC_WAN_AC
+		$ipt -A OUTPUT -p udp $EXT_ARGS \
 			-m comment --comment "_SS_SPEC_RULE_" -j SS_SPEC_WAN_AC
 	fi
 	return $?
@@ -189,13 +203,7 @@ IPLIST=$(cat <<-EOF | grep -E "^([0-9]{1,3}\.){3}[0-9]{1,3}"
 	127.0.0.0/8
 	169.254.0.0/16
 	172.16.0.0/12
-	192.0.0.0/24
-	192.0.2.0/24
-	192.88.99.0/24
 	192.168.0.0/16
-	198.18.0.0/15
-	198.51.100.0/24
-	203.0.113.0/24
 	224.0.0.0/4
 	240.0.0.0/4
 	255.255.255.255
