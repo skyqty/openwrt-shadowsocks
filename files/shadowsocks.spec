@@ -30,7 +30,7 @@ get_config() {
 	config_get wan_fw_ip $1 wan_fw_ip
 	config_get ipt_ext $1 ipt_ext
 	: ${timeout:=60}
-	: ${local:=0.0.0.0}
+	: ${local:=192.168.1.1}
 	: ${local_port:=1080}
 	: ${tunnel_port:=5300}
 	: ${tunnel_forward:=8.8.4.4:53}
