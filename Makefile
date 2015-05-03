@@ -11,9 +11,10 @@ PKG_NAME:=shadowsocks-libev
 PKG_VERSION:=2.1.4
 PKG_RELEASE:=1
 
-PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
-PKG_SOURCE_URL:=https://github.com/shadowsocks/openwrt-shadowsocks/releases/download/v$(PKG_VERSION)
-PKG_MD5SUM:=f772a750580243cfcac4649d7b9171b1
+PKG_SOURCE_PROTO:=git
+PKG_SOURCE_URL:=git://github.com/nightcoffee/shadowsocks-libev-udp.git
+PKG_SOURCE_VERSION:=$(PKG_VERSION)
+PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION).tar.gz
 
 PKG_LICENSE:=GPLv3
 PKG_LICENSE_FILES:=LICENSE
@@ -32,7 +33,7 @@ define Package/shadowsocks-libev/Default
 	SECTION:=net
 	CATEGORY:=Network
 	TITLE:=Lightweight Secured Socks5 Proxy $(2)
-	URL:=https://github.com/shadowsocks/shadowsocks-libev
+	URL:=https://github.com/nightcoffee/shadowsocks-libev-udp
 	VARIANT:=$(1)
 	DEPENDS:=$(3)
 endef
