@@ -4,9 +4,8 @@ Shadowsocks-libev for OpenWrt
 简介
 ---
 
- 本项目是 [shadowsocks-libev][1] 在 OpenWrt 上的移植  
- 当前版本: 2.1.4-1  
- [预编译 IPK 下载][2]  
+ 本项目是 [shadowsocks-libev-udp][4] 在 OpenWrt 上的移植  
+ 基于 [shadowsocks-libev][1] 实现了UDP透明代理，需配合 [udpdst][5] 内核模块使用才用实现
 
 特性
 ---
@@ -38,7 +37,7 @@ Shadowsocks-libev for OpenWrt
    tar xjf OpenWrt-SDK-ar71xx-for-linux-x86_64-gcc-4.8-linaro_uClibc-0.9.33.2.tar.bz2
    cd OpenWrt-SDK-ar71xx-*
    # 获取 Makefile
-   git clone https://github.com/shadowsocks/openwrt-shadowsocks.git package/shadowsocks-libev
+   git clone https://github.com/nightcoffee/openwrt-shadowsocks.git package/shadowsocks-libev-udp
    # 选择要编译的包 Network -> shadowsocks-libev
    make menuconfig
    # 开始编译
@@ -54,10 +53,7 @@ Shadowsocks-libev for OpenWrt
 
  - shadowsocks-libev-spec 从 `v1.5.2` 开始可以使用 [LuCI][L] 配置界面
 
- - [IP 忽略列表][3]: `/etc/shadowsocks/ignore.list` 可以使用下面命令更新
-   ```bash
-   wget -O- 'http://ftp.apnic.net/apnic/stats/apnic/delegated-apnic-latest' | awk -F\| '/CN\|ipv4/ { printf("%s/%d\n", $4, 32-log($5)/log(2)) }' > /etc/shadowsocks/ignore.list
-   ```
+ - [IP 忽略列表][3]: `/etc/shadowsocks/ignore.list`
 
 ----------
 
@@ -67,3 +63,5 @@ Shadowsocks-libev for OpenWrt
   [3]: https://github.com/shadowsocks/openwrt-shadowsocks/blob/master/files/shadowsocks.list
   [L]: https://github.com/aa65535/openwrt-dist-luci
   [S]: http://wiki.openwrt.org/doc/howto/obtain.firmware.sdk
+  [4]: https://github.com/nightcoffee/shadowsocks-libev-udp
+  [5]: https://github.com/nightcoffee/udpdst
