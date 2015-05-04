@@ -12,8 +12,8 @@ PKG_VERSION:=2.1.4
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_URL:=git://github.com/nightcoffee/shadowsocks-libev-udp.git
-PKG_SOURCE_VERSION:=$(PKG_VERSION)
+PKG_SOURCE_URL:=https://github.com/nightcoffee/shadowsocks-libev-udp.git
+PKG_SOURCE_VERSION:=70ca56ec89b47000e5c8b4ff54c791956e85551f
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION).tar.gz
 
